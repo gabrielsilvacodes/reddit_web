@@ -1,0 +1,192 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    padding: 10px 0;
+    background-color: white;
+}
+body{
+    background-color: #DAE0E6;
+}
+
+.wraper-header{
+
+    width: 100%;
+    padding: 0 10px;
+    display: flex;
+    max-width: 1280px;
+    width: 0 auto;
+  
+   
+
+
+
+}
+.wraper-header img{
+    width: 100px;
+
+}
+
+.home-bnt{
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    padding: 10px;
+    
+}
+
+.search{
+    width: 100%;
+}
+
+.search input{
+    width: 100%;
+    background-color:rgb(245,245,245) ;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgb(240,240,240);
+
+}
+
+.notifications{
+   
+    margin:0 10px ;
+    display: flex;
+    justify-content: space-between;
+    width:35%;
+
+}
+
+.notifications svg{
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+}
+.notifications svg:hover{
+    background-color: rgb(240,240,240) ;
+
+}
+
+
+.posts{
+  
+    width: 55%;
+    
+}
+
+.sidebar{
+    
+    width: 25%;
+}
+.comunidade-single{
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+
+    
+   
+}
+.comunidades{
+    background-color: white;
+    padding-bottom:10px;
+}
+.wraper-main{
+   
+    display: flex;
+    
+    
+    
+}
+
+.wraper-main{justify-content: space-around;}
+.comunidade-single svg{
+color: rgb(70,209,96);
+
+}
+
+.comunidade-single button{
+    
+background-color: #069;
+color: white;
+border-radius: 10px;
+border: 0;
+width: 60px;
+height: 20px;
+}
+.comunidade-single img{
+    width: 30px;
+    vertical-align: middle;
+    
+}
+
+
+.comunidades h2{
+
+    color: white;
+    padding-top: 90px 0;
+    padding-bottom:10px ;
+    padding-left: 10px;
+    background-image: linear-gradient(to right, #003973 0%, #E5E5BE  51%, #003973  100%)
+
+
+}
+
+.comunidades button.view-all{
+
+    display: block;
+    margin:10px auto ;
+    width: 80%;
+    height: 30px;
+    background-color: #069;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+
+
+}
+
+.post-single{
+   
+ 
+    display: flex;
+    background-color: white;
+     margin-bottom: 20px;
+    
+    
+    
+   
+}
+.post-sidebar{
+    padding: 25px 10px;
+    background-color:rgb(245, 245, 245) ;
+}
+
+.post-content{
+  
+}
+.post-content h3{
+    margin: top 10px; ;
+}
+
+.post-content p > img{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    display: inline;
+
+}
+
+
+.post-content img{
+    width: 100%;
+    display: block;
+}
+
+.post-content-text{
+    padding: 10px;
+}
+
+
