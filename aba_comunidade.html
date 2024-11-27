@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="style_aba_comunidade.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reddit</title>
+    </head>
+    <body>
+        <header>
+    
+            <div class="wraper-header">
+                <div class="logo">
+                    <img src="imgs/redit_logo.jpeg" alt="">
+                </div>
+    
+                <div class="home-bnt">
+                   <p>
+                    <span>
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </span>
+                   </p> 
+                   <p>
+                    <i class="fa-solid fa-chevron-down"></i>
+                   </p>
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Procure no reddit">
+                </div>
+    
+                <div class="notifications">
+                    <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-bell"></i>
+                    <i class="fa-solid fa-video"></i>
+                    <i class="fa-solid fa-bullhorn"></i>
+    
+                </div>
+    
+    
+    
+            </div>
+    
+        </header>
+
+    <!-- Seção de Cabeçalho da Comunidade -->
+    <section class="community-header">
+        <div class="banner">
+            <img src="imgs/frankOcean.jpg" alt="Banner da comunidade">
+        </div>
+        <div class="community-info">
+            <h1>r/funny</h1>
+            <p>O lugar para as piadas mais engraçadas da internet.</p>
+            <span class="member-count">10.8 milhões de membros</span>
+        </div>
+    </section>
+
+    <!-- Lista de Posts -->
+    <section class="post-list">
+        <div class="post-single">
+            <div class="post-sidebar">
+                <i class="fa-solid fa-arrow-up"></i>
+                <p><b>19k</b></p>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="post-content">
+                <div class="post-content-text">
+                    <p><img src="imgs/frankOcean.jpg"><b><r>Guilherme</b> • Posted by <u>Guilherme 10 Hours Ago </u></p>
+                    <h3>Olá Danki code</h3> 
+                </div> 
+                <img src="https://fadurpe.com.br/wp-content/uploads/2022/07/front-end.png" alt="Imagem do post">
+            </div>
+        </div>
+
+        <div class="post-single">
+            <div class="post-sidebar">
+                <i class="fa-solid fa-arrow-up"></i>
+                <p><b>15k</b></p>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="post-content">
+                <div class="post-content-text">
+                    <p><img src="imgs/frankOcean.jpg"><b><r>João</b> • Posted by <u>João 3 Hours Ago </u></p>
+                    <h3>Quem entende de JavaScript?</h3>
+                </div> 
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAMAAzAMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQYBAwQCB//EAD8QAAEDAwEEBQgJBAEFAAAAAAEAAgMEBRESBiExYRNBUXFyBxQzNGKBkaEVIiMyNVJTscEkN0KS0WNzhJOy/8QAGgEBAAIDAQAAAAAAAAAAAAAAAAQFAgMGAf/EAC4RAQACAQIEBAUEAwEAAAAAAAABAgMEEQUxMnESITNhEyJBUbEjUoGRFKHw0f/aAAwDAQACEQMRAD8A+4oCAgweCCpbTN03EHtYFzPFo21H8Jun6ESqtvEBAQEBAQeo2GR4a3iUmdhv8ym5fFYeOHvhPMpvZ+KfEq98J5lNy+K8+JV54TzKbl8U+JV74TzKbl8U+JV5seZTcvivfiVe+F5lppImF78aRzXsWiZ2ebbNCyeLvZ26LbTj2Auw0VdtPTsrsnneXapTAQEBAQEBBgryeQrG1bf6qF3azHzXP8ZrtkrPsl6afKUGqZJEBAQEBAQb6P1lnesb8nsc0qtENjKAgICAg5bgfsO8hZU5sbckYt8sF9om6aWEdjB+y7XBG2Kse0Ky3NvW14ICAgICAgwUFe2sbup39mQqPjNfKspWm+quqhShAQEBB6bG94yxjnDkMrKuO1umHm8PXQTfoyf6rL4OT9svPFV7o8iqYCMFab+UebOOaXDXOzpaT3Ba64r2j5Y3ZTMRzZ6J/wCm74LL/Hy/tn+jxR9zon/pu+Cf4+X9s/0eKPudE/8ATd8E/wAfL+2f6PFH3Oif+m74J/j5f2z/AEeKPuGN+PuO+CThyx5zWTxVcFyP2bfF/Cxx8yzhYMvaO0hb6xvMQ1zyX+MaWtHYMLt6xtEQrJ85e1kCAgICAgICCE2qbmjid2SKo4xH6MT7pGm6lW6lziYICAgIJ7Z71aTx/wALouDelbuianqhKjirhGVaH8QPjcuG1HXfvP5WlOULRZPRS+IK74D6d+6Nq+qEkr5EEBAQc9a7TSynkomut4dNefZsxRveFRuZ9GORK4vHyWVnPRt1VcLe14/dStPG+ase8Nd+mV9C7SFayvQQEBAQEBAQRO0zc2tx/K9p+arOLRvpZ/hu0/WqK5hOEBAQEE7s96vL410XBvSt3RNT1QlRxVwjKvD+IHxuXDajrt3n8rSnKFosnopfEFd8B9O/dG1fVCSV8iPHSxji9o961/Gx/uh74Z+x0sf6jP8AZPjY/wB0f2eGfsdLH+oz/ZPjY/3R/Z4Z+zkuMjDSSaXtJ4biq/ieak6W0RMN2Cs/EhVLkftmDq0/yuVx8k+zNobrulMD+dTtDG+ppDTl6JXddgr2UBAQEBAQEBBH39uq0VHJoPwIUHiUb6S7Zina8KWuTWAgICAgndn/AFeTxrouDelbuianqhKq4RlXg/ED43LhtR137z+VpTlC0WT0UviCu+A+nfujavqhIlXyIrlQPt5PEVweqj9e/eVtj6Ya8clH2ZmOSbAvdoeIy4HNQR2NC3U5MZ5ujZ1uq7Q56g4/Iqx4ZHi1Vfb/AMaM87UXNdYgCAgICAgICAg5bmzpLfUt7Ynfso+rr4sF49pZUna0SooXGwshAQEBBO7P+gkPtrouDelbuianqhKq4RlXg/ED43LhtR137z+VpTlC0WT0UviCu+A+nfujavqhIlXqIrk/p5PEVwmq9e/eVtj6YeFoZiAgiK05qXnnhbqcmueaS2Xbm4l35Yz+6t+ERvqO0I2on5NlsXTIYgICAgICAgINc7dcT29rSPksMlfFSY9nsc3z/hu7FxCzEBAQEE7s/wCryeNdFwb0rd0TU9UJUK4RlXh/ED43LhtR127z+VpTlC0WT0UviCu+A+nfujavqhIlXsoivTRvdPJpY4/WPALiNRivfPbw1mfP7LSlqxWN5ZbSVDuETgOa9rw/VW5UknNSPq2tt1Qepo7yt9OD6u3OIj+WE6nHDVU0z6bT0jmku6go+r0V9L4fHMTM/Znjyxk5ICo3zvPNa6+UPZ5pnZNv9RUO7GgfNXfBq/qXn2RdTPlCzroUQQEBAQEBAQEGHcF5PIfP5m6ZpG9jyPmuJyRte0faZ/Kzjk8LB6ICAgndnx/TSeNdFwb0rd0TU9UJVXCMq8H4gfG5cNqOu/efytKcoWiyeil8QV3wH0790bV9UJEjKvkQwvIjYMJsGE2EReD9sxp6mrmOO2/WrHsnaSPlmVVfvce8qshuWHZJv2VQ/wBoD5K/4LHy3n3RdTPnELCrxFEBAQEBAQEBBgoKJcW6K+pb/wBRx+JyuM1VfDnvHvKxxzvWHOtDMQEBBPbPeryeL+F0XBvSt3RNT1QlArhGVeH8QPjcuG1HXfvP5WlOULPZfRSeIK74D6d+6Nq+qEkr5EeS8N+8QBzWFr1rG9p2exEzya/OoS8MEjSScABaI1uCbxSLbzLL4d9t9m4KUwQl5diqPssC5LjM76vb2hYabyxqweJUJsWjZVuKB7vzSk/IBdHweu2CZ+8oeon5k2rdHEBAQEBAQEBBgryRS743TdZ+ZB+S5PiNfDqrLDDO9IcChe8thw3cV5vseQsgXgndn/QSeL+F0XBvSt3RNT1QlQrhGVeH18+Ny4bUddu8/laU5Qmaeqlp2ubEQMnfuWWn1ubTVmuP6l8UXneR9VUP+9K73HC8ya7U353n8fgjDSPo0neckknmVDnznefNsiIhvoB/WR96ncNjfV0a8/pynwu2Vav3p328x7G4+S47ik+LW2/j8LHBH6cK4ozNb9nGabXEe0k/NdRwuu2mj3QM8/OlVZNQgICAgICAgIMFBUdpG6bkT2sC5fildtRv94TsHQiiqyW5aIoIZaSESxNfmNvEcl2GPDjyYKxeu/lCvm01tO0ueay0z98bnxHkcj4FRMnCMFuneGddReHDNZqhnonMk+RUDLwjNTpnxf6bq6is83fZYZYIZGysLTq6wrHheK+LHat4282nPaLTGyRVo0KvD+IHxuXDajrt3n8rSnKEkokNoASd2T3L2seKdoeTOzojo6iT7sZx2k4U3Fw7UZOVJ/nyarZqR9XdR298UokkeMjqCudDwm+DLGW9uSNl1EWrtEJEcFeoqs3l316nvwuK1076y/dZ4vLHCC6lqerrZW6bZTj2crrtDG2np2V2Tql3qYwEBAQEBAQEBBgoKvtU3FZCe1n8rnOMxtmrPsmabplCHgqdIjmttJ6pDj9Nv7LtdN6NO0K2/VLatzEQEAIKvD6+fG5cNqOu/efys68oWG2U0U7XukbnBAAVjwnR4dRW1skb7S1ajLakxEJWOKOPc1gHuXRY8GPHG1axCHNrTzl7W5iIMFeCq3d2elPbJ/K4bNPi1F595/K0r0QhzwSRe6BuijgHYwLs9PG2Kseytv1S6VvYiAgICAgICAgIK5taz61O/k4Kh4zXzpbulaaeavKjSm2Gomh9FI5uOoHctuLPlxT8ltmNq1tzh3Q3qob6RrXjmMKwx8XzV643araes8nbDead3pGujPMZHyVhj4vgt1bx/wB7NNtPeOTuinhl3xSsf3FWGPPiy9Fon+WqaTX6Ni3cmKrwfiB8blwuo6795/K0pyhaLJ6KXxK74D6d+6Nq+qEiSBxIV7M7ecokebnlrKeP70rTybvUPLxDTY+d4/jzbK4b2+jlkujRuijJ5ncq3LxykeWOu/dvrpJ+suWW4zv4YaOSrsvFtTk5TEN1dPSEVc3ExDO/Ls5UCkzM7y3TyRzRqcB2nC2xG87MJX+EaY2N7GgLuKxtWFZPNsWTwQEBAQEBAQEBBBbVtzTQu7H4+Sp+M1/SrPukafqVhc6mCAgIMg43jOeS9iZjlJ5OmC4VUONMpcOx29SsOuz4vKLeTXbFS30eaU6qwOPFziSoea023mfq2VjbyTcNVLA0tjOAd5WeDW5dPWa455l8VbzvLW+WSQ5e9x7ytOTUZck/PaZ/llFKxyh4WpmygIOG5ndG3mtmNhZy0rddTE3teApWGN8tY94YW5SvwGPcu0VjK9BAQEBAQEBAQEERtO3Vbc9jwqzi1d9Pu3YOtUus965lOF4CAgICDfR+ss71jfk9jmlVHhsZXoICDw+WOP77wPevYiZebo6tmZK9ug5AC20iY5sZl6tTddwp2+2FM0dfFqKR7tWTypK8rsVcICAgICAgICAgIOK70z6uhkhjxrOCM96ia3DbNhmlebZjtFbbyqc9trKf0lO/Ha3eFzOTSZ8fVVNrkrblLlxvx1qMzYQEBAQb6L1lnesb8nsc0oXBoySAOa0RDPdpfWQs/wAtR7AsopMvJlzvuDj9xmOZKyjH93nic8lTK/7zyOQ3LOKxDyZ3asknf81k8e4opJjiKNzzyCzrS1+mN3k2iOcpqzWqqirYqiaPQxm/BO/grbQaDNXLGS8bRDRmy18O0LOuhQxAQEBAQEBAQEBBgheBhNhzVFvpaj00LXc8YK05dNhy9dYZVvavKUbUbOU78mCV8R5/WCrsvB8U+nPh/wBt0aifqi6mw1sO+NrZh7B3/Aquy8Lz06fm7N1c9JR0sMsJxNG9h7HNIUG2O9OqNm2JieTwsHrLHFpy0kHtCSDnOJ+u5x7yvNhgZJwN/cvefkOunttbUH7Onfj8ztwUnFo9RknypLCclK85SdPs1K4g1E7Wj8rBk/FWGPg159S3/d2m2oj6Qk4LHRREEx9I4dbzlWWPhumx+cV3abZr2SDImRjDGtaOQU2tIryhrmZl6xzWTxlAQEBAQEBAQEBAQEBAQEGMLzYeXxse3S9ocOwjK8tSLdUbvYmY5OCoslDNkiLQ49bNyhZeG6fJ9NuzZXNeEZLs07V9jUDHtt3hV1+DTE7Y7+TbGp+8Oqn2dp276iR8p+AUjFwjDHXO7G2ot9EnBQ01OMQwsbzxvVjj02LH01hpm9rc5b8LcxMIMr0EBAQEBAQEBAQEBAQEETedorVZC36Vq20wcMhz2nHxxhBvtN4obzT+cWybp4d2HhpAOewkb0HcDkICAgIDiACScDtQV2o20sdOJJH1UjoIyQ+pige+FpHHMgGn5oJ2mmjqIWTwvD4pGhzHDgQeCDagIPL3hjS5xDWgZJJwAEGiguFJcqZtTQVEVRA4kCSN2Qfeg6coCBkoMoCAgICAgICAgIKX5YmtPk6u+QDhjSM9X1gg67NdKCx7D2KatlbFGaGmZG0DLnuLG4a0dZKDNDtlTzbQtsdZbq231UkZkp/OWt0ztHHSWk4PI4QeINtYJdqBs66210ddp1/Xa0N0fnznePmg6anahtPtFHZPoyuknkZ0jZGBujRnBcTncAg5rrtxR0VNV1VHRVlypqJxFVPSNaWRY47yRnHXjKDZfquTaDYCuqrBIZHVdE51OW8Tkbx38Qgg/JltFY73shR2TMcVVTUwpamhl+q7IGknB4g7z270FxoKemsNkgpRNopKKEMEkpG5jR1+4IIOt23FIIpxYrvNb5XNArI4WlozuB051Y54Qb77ttbLHdaO31zKhj6twDJTFiMDGSS47t3xQc9u2zob1TXUSWq5xwUbQJGz0rg6Zjhxa3j7sZQcux152eothzcdnbZVQ2qKWTTAxrpJCRxdvJPxKDFL5SaWtsEd4t9lu1XG7VrjhiaXRgOIyTnHVwBKCQg2zo7rsrUXmxsmqjGHMMLGDXE8D/IHhjIKCM8le0FfddnqAV9HXSSSh7310gb0bjkntzy4IL6gICAgICAgICAgpfli/t1eP+23/wCgg4q67W607HbJurLc2uq5Y6ZlDE7DQ2boxhxcfugduCgito2XQeUjYia8y03TSPqNMNK06YhpZu1ne/jxwO7igkPKhA+1XOw7YU+426oENXj/AChkIG/uOf8AZBP7MGK41Vw2i1a4qzTHTOzu6BmcEd5Ljz3diCu0Vxfe9nb23ZqipLXZYxUsfK9uuWZ+Hay2MYa0E9ZJ7kHT5N7nT2nyXWarrC7oQBGXNGdOqQtyeQzvQZ2+8n9ovVLUXakaaC7QxumZV050lxAz9bHHhx4oKndtornX+SDZ65XJznCW4Rsr5MY1wskcMnv0tz25QfYoJ4JqRk8MjDTuYHNdkadKCg+UmOKo2t2HZIxskbrgTpcMg7gQg+hyACOQgb9J3oPmPkf/ALST/wDk/sgl/In/AG1tR9qfP/uegiNgqLoWbd1dK3RbqiskbTY+67S12ojll2M/8IJzyOHV5PLTjG5jhx9ooLsgICAgICAgICDBQUjymRzX2gj2VtrJH1dc9pmeGnRTwg5LnO4DsA4koJbaDZK236y09rq2yMjptHm8kJ0vjLRgEII2p8nVsqvo+WqrblLWUTtTax1QekduwRkcB3YQWG72emutjqLRVBxp54eicdX1sY45PWg6bfRQ2+ggoqdumGCMRsHIDCCr0fk8tFJWVksM9cykq3F8tB05EJcc5OOw54Zwg2WvYG0W6wVdk6SrnoqprmOZLOTpaTnDexB7j2Ocyh+jZ77dJ7dp0dA97QS38peBqI96CYqLJbamzOs0tIz6PMfRdABhob1AIK3afJxbbaeiFwuc1vaQW0MtQTEO8cSOR3IO+97G0d6uVLcKitrYpKJwfSthkDWxHtAwgmamhfPbvMzWVDHFukzsIDz70EDbNlKPZTZ24Udtqap1KaeVwhleCGktOSEFV8kezYrNhqKokutyZT1BlEtHHNpjyJHDcQMjOOooPpsFDTU9CKKGFrKZrNAjaMDHWggdltjKPZqU+Y1lc6nD3PippJvs4y4b8Dr96C0ICAgICAgICAgICAgICAgICAgICAgIOG72yG7Ub6SpfO2J+53QyFhcOzI6kHFs5sxb9m6fze1ecMp9+IXzFzGk7yQDwQTaAgICAgICD//Z" alt="Imagem do post">
+            </div>
+        </div>
+
+        <div class="post-single">
+            <div class="post-sidebar">
+                <i class="fa-solid fa-arrow-up"></i>
+                <p><b>10k</b></p>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="post-content">
+                <div class="post-content-text">
+                    <p><img src="imgs/frankOcean.jpg"><b><r>Ana</b> • Posted by <u>Ana 5 Hours Ago </u></p>
+                    <h3>Qual seu meme favorito?</h3>
+                </div> 
+                <img src="https://images7.memedroid.com/images/UPLOADED776/618d5c3183913.jpeg" alt="Imagem do post">
+            </div>
+        </div>
+
+        <div class="post-single">
+            <div class="post-sidebar">
+                <i class="fa-solid fa-arrow-up"></i>
+                <p><b>25k</b></p>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="post-content">
+                <div class="post-content-text">
+                    <p><img src="imgs/frankOcean.jpg"><b><r>Carlos</b> • Posted by <u>Carlos 2 Hours Ago </u></p>
+                    <h3>Por que os cachorros são melhores que os gatos?</h3>
+                </div> 
+                <img src="https://neuropod.com.br/wp-content/uploads/2018/02/cc3a3es-x-c.png" alt="Imagem do post">
+            </div>
+        </div>
+
+        <div class="post-single">
+            <div class="post-sidebar">
+                <i class="fa-solid fa-arrow-up"></i>
+                <p><b>8k</b></p>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="post-content">
+                <div class="post-content-text">
+                    <p><img src="imgs/frankOcean.jpg"><b><r>Luciana</b> • Posted by <u>Luciana 6 Hours Ago </u></p>
+                    <h3>Por que o café é a melhor bebida?</h3>
+                </div> 
+                <img src="https://www.graogourmet.com/wp-content/uploads/2017/09/tipos-cafe-grao-gourmet.jpg" alt="Imagem do post">
+            </div>
+        </div>
+    </section>
+</body>
+</html>

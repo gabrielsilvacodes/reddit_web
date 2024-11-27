@@ -1,0 +1,253 @@
+/* Reset básico para garantir um layout consistente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos para o corpo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #dae0e6;
+    color: #1a1a1b;
+    padding-top: 80px; /* Ajuste para não sobrepor o header fixo */
+}
+
+/* Estilos do cabeçalho */
+header {
+    background-color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.wraper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.wraper-header img {
+    width: 100px;
+}
+
+.home-bnt {
+    
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.home-bnt p {
+    font-size: 1rem;
+    color: #000000;
+    margin-right: 10px;
+}
+
+.home-bnt p:hover {
+    text-decoration: underline;
+}
+
+.search input {
+    width: 500px;
+    padding: 8px 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+.notifications {
+    display: flex;
+    justify-content: space-around;
+    width: 150px;
+}
+
+.notifications i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.notifications i:hover {
+    color: #0079d3;
+}
+
+/* Estilos para a seção do cabeçalho da comunidade */
+.community-header {
+    background-color: #ffffff;
+    margin-top: 80px; /* Espaço para o cabeçalho fixo */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.community-header .banner img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.community-info {
+    flex-grow: 1;
+}
+
+.community-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.community-info p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.member-count {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Estilos para a lista de posts */
+.post-list {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.post-single {
+    display: flex;
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-sidebar {
+    padding: 25px 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.post-content {
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+.post-content:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.post-content h3 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.post-content p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.post-content p > img{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    display: inline;
+
+}
+
+
+.post-content-text {
+    padding: 10px;
+}
+
+.post-header a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para as interações do post */
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+.post-footer span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.post-footer span:hover {
+    color: #0079d3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .wraper-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search input {
+        width: 250px;
+        margin-top: 10px;
+    }
+
+    .home-bnt {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .notifications {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .community-header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .community-header .banner img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .community-info h1 {
+        font-size: 2rem;
+    }
+
+    .community-info p {
+        font-size: 1rem;
+    }
+
+    .post-single {
+        flex-direction: column;
+    }
+
+    .post-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .post-content p {
+        font-size: 1rem;
+    }
+}
