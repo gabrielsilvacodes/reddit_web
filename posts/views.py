@@ -1,25 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Sum, Count, Q, Case, When, IntegerField
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.views.generic import CreateView, UpdateView, DeleteView  # Adicione isso
 from .models import Post, Community, Comment, Vote
+
 
 # Página inicial
 def home(request):
     if request.user.is_authenticated:
-        # Caso o usuário esteja autenticado
         posts_with_votes = Post.objects.select_related('community', 'author').annotate(
             total_votes=Sum('vote__value'),
             user_vote=Case(
-                When(vote__user=request.user, then=Sum('vote__value')),
+                When(vote__user=request.user, then='vote__value'),
                 default=0,
                 output_field=IntegerField(),
             )
         ).order_by('-pub_date')
     else:
-        # Caso o usuário seja anônimo
         posts_with_votes = Post.objects.select_related('community', 'author').annotate(
             total_votes=Sum('vote__value')
         ).order_by('-pub_date')
@@ -31,7 +30,6 @@ def home(request):
         'posts': posts_with_votes,
         'communities_with_rank': communities_with_rank,
     })
-
 
 # Página para visualizar todas as comunidades
 def view_all(request):
@@ -90,17 +88,6 @@ class CommunityDeleteView(DeleteView):
     template_name = 'posts/community_confirm_delete.html'
     success_url = reverse_lazy('view_all')
 
-# CRUD para Comment
-class CommentCreateView(CreateView):
-    model = Comment
-    fields = ['content', 'post', 'parent']
-    template_name = 'posts/comment_form.html'
-    success_url = reverse_lazy('home')
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
 # Votação em Posts
 def create_vote(request, post_id, value):
     if request.method == 'POST':
@@ -112,16 +99,14 @@ def create_vote(request, post_id, value):
         )
 
         if not created and vote.value == value:
-            # Remove o voto se o mesmo botão for clicado novamente
             vote.delete()
             value = 0  # Valor atual do voto é zerado
 
-        # Soma total de votos
         total_votes = Vote.objects.filter(post=post).aggregate(Sum('value'))['value__sum'] or 0
 
         return JsonResponse({
             'total_votes': total_votes,
-            'current_vote': value,  # Retorna o voto atual
+            'current_vote': value,
         })
 
     return JsonResponse({'error': 'Método não permitido'}, status=405)
@@ -142,9 +127,28 @@ def search(request):
         'communities': communities
     })
 
+# Página de Detalhes do Post (com Comentários)
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'post_detail.html', {'post': post})
+    comments = Comment.objects.filter(post=post).select_related('author', 'parent').order_by('pub_date')
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            content = request.POST.get('content', '').strip()
+            if content:
+                parent_id = request.POST.get('parent', None)
+                parent_comment = None
+                if parent_id:
+                    parent_comment = get_object_or_404(Comment, id=parent_id)
+                Comment.objects.create(
+                    content=content,
+                    post=post,
+                    author=request.user,
+                    parent=parent_comment
+                )
+                return redirect('post_detail', pk=post.pk)
+
+    return render(request, 'post_detail.html', {'post': post, 'comments': comments})
 
 @login_required
 def leave_community(request, community_id):

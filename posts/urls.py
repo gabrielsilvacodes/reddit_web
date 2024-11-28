@@ -2,8 +2,7 @@ from django.urls import path
 from . import views
 from .views import (
     PostCreateView, PostUpdateView, PostDeleteView,
-    CommunityCreateView, CommunityUpdateView, CommunityDeleteView,
-    CommentCreateView
+    CommunityCreateView, CommunityUpdateView, CommunityDeleteView
 )
 
 urlpatterns = [
@@ -26,9 +25,6 @@ urlpatterns = [
     path('community/<int:pk>/edit/', CommunityUpdateView.as_view(), name='community_update'),  # Editar comunidade
     path('community/<int:pk>/delete/', CommunityDeleteView.as_view(), name='community_delete'),  # Deletar comunidade
 
-    # Adicionar comentários
-    path('comment/new/', CommentCreateView.as_view(), name='comment_create'),  # Criar novo comentário
-
     # Votos (Upvote e Downvote)
     path('post/<int:post_id>/upvote/', views.create_vote, {'value': 1}, name='post_upvote'),  # Upvote em post
     path('post/<int:post_id>/downvote/', views.create_vote, {'value': -1}, name='post_downvote'),  # Downvote em post
@@ -36,8 +32,8 @@ urlpatterns = [
     # Busca
     path('search/', views.search, name='search'),  # Página de busca
 
+    # Detalhes do post
     path('post/<int:pk>/', views.post_detail, name='post_detail'),  # Página de detalhes do post
-
 
     # Entrar e sair da comunidade
     path('community/<int:community_id>/join/', views.join_community, name='join_community'),  # Entrar na comunidade
@@ -46,6 +42,6 @@ urlpatterns = [
     # Detalhes da comunidade
     path('community/<int:community_id>/', views.community_detail, name='community_detail'),  # Página de detalhes da comunidade
 
+    # Votos em post
     path('post/<int:post_id>/vote/<int:value>/', views.create_vote, name='create_vote'),
-
 ]
