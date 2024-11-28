@@ -58,15 +58,19 @@
                 <div class="post-single">
                     <div class="post-sidebar">
                         <i class="fa-solid fa-arrow-up"></i>
-                        <p><b>{{ post.total_votes|default:0 }}</b></p> <!-- Número de votos calculado -->
+                        <p><b>{{ post.total_votes|default:0 }}</b></p> <!-- Soma dos votos -->
                         <i class="fa-solid fa-arrow-down"></i>
                     </div>
                     <div class="post-content">
                         <div class="post-content-text">
                             <p>
                                 <b>{{ post.author.username }}</b> • Postado em <u>{{ post.pub_date|date:"d M Y" }}</u>
+                                {% if post.community %}
+                                em <a href="{% url 'aba_comunidade' post.community.id %}">r/{{ post.community.name }}</a>
+                                {% endif %}
                             </p>
                             <h3>{{ post.title }}</h3>
+                            <p>{{ post.content }}</p> <!-- Conteúdo do post -->
                         </div>
                         {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Imagem do Post">
