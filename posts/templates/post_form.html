@@ -39,8 +39,6 @@
                     <option value="{{ community.id }}" {% if community.is_selected %}selected{% endif %}>
                         {{ community.name }}
                     </option>
-                    {{ community.name }}
-                    </option>
                     {% endfor %}
                 </select>
             </div>
@@ -56,6 +54,11 @@
 
             <button type="submit">{% if post %}Atualizar Post{% else %}Postar{% endif %}</button>
         </form>
+
+        <!-- Botão de Voltar para a Home -->
+        <div class="back-to-home">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Voltar para a Home</a>
+        </div>
     </main>
 
     <footer>
