@@ -1,9 +1,6 @@
 from django.urls import path
 from . import views
-from .views import (
-    PostCreateView, PostUpdateView, PostDeleteView,
-    CommunityCreateView, CommunityUpdateView, CommunityDeleteView
-)
+from .views import PostCreateView, PostUpdateView, PostDeleteView
 
 urlpatterns = [
     # Página inicial
@@ -15,36 +12,34 @@ urlpatterns = [
     # Página específica de uma comunidade
     path('communities/<int:community_id>/', views.aba_comunidade, name='aba_comunidade'),
 
+    # Criar nova comunidade
+    path('communities/new/', views.community_form, name='community_create'),
+
+    # Editar comunidade existente
+    path('communities/<int:community_id>/edit/', views.community_form, name='edit_community'),
+
+    # Deletar comunidade
+    path('communities/<int:community_id>/delete/', views.delete_community, name='delete_community'),
+
     # CRUD para Post
     path('post/new/', PostCreateView.as_view(), name='post_create'),  # Criar novo post
     path('post/<int:pk>/edit/', PostUpdateView.as_view(), name='post_update'),  # Editar post existente
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),  # Deletar post existente
 
-    # CRUD para Community
-    path('community/new/', CommunityCreateView.as_view(), name='community_create'),  # Criar nova comunidade
-    path('community/<int:pk>/edit/', CommunityUpdateView.as_view(), name='community_update'),  # Editar comunidade
-    path('community/<int:pk>/delete/', CommunityDeleteView.as_view(), name='community_delete'),  # Deletar comunidade
-
-    # Votos (Upvote e Downvote)
-    path('post/<int:post_id>/upvote/', views.create_vote, {'value': 1}, name='post_upvote'),  # Upvote em post
-    path('post/<int:post_id>/downvote/', views.create_vote, {'value': -1}, name='post_downvote'),  # Downvote em post
+    # Votação em Posts
+    path('post/<int:post_id>/vote/up/', views.create_vote, {'value': 1}, name='post_upvote'),  # Upvote em post
+    path('post/<int:post_id>/vote/down/', views.create_vote, {'value': -1}, name='post_downvote'),  # Downvote em post
 
     # Busca
-    path('search/', views.search, name='search'),  # Página de busca
+    path('search/', views.search, name='search'),
 
-    # Detalhes do post
-    path('post/<int:pk>/', views.post_detail, name='post_detail'),  # Página de detalhes do post
+    # Detalhes do Post
+    path('post/<int:pk>/', views.post_detail, name='post_detail'),
 
-    # Entrar e sair da comunidade
-    path('community/<int:community_id>/join/', views.join_community, name='join_community'),  # Entrar na comunidade
-    path('community/<int:community_id>/leave/', views.leave_community, name='leave_community'),  # Sair da comunidade
+    # Gerenciamento de comunidades (entrar/sair)
+    path('communities/<int:community_id>/join/', views.join_community, name='join_community'),  # Entrar na comunidade
+    path('communities/<int:community_id>/leave/', views.leave_community, name='leave_community'),  # Sair da comunidade
 
-    # Detalhes da comunidade
-    path('community/<int:community_id>/', views.community_detail, name='community_detail'),  # Página de detalhes da comunidade
-
-    # Votos em post
-    path('post/<int:post_id>/vote/<int:value>/', views.create_vote, name='create_vote'),
-
+    # Deletar comentário
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
-
 ]

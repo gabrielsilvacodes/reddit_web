@@ -1,20 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Community(models.Model):
+    """Modelo que representa uma comunidade."""
     name = models.CharField(max_length=100, unique=True, verbose_name="Nome")
     description = models.TextField(verbose_name="Descrição")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Criador")
     members = models.ManyToManyField(
         User, related_name='communities', blank=True, verbose_name="Membros"
-    )  # Adiciona relacionamento com membros
+    )
 
     def __str__(self):
         return self.name
 
     @property
     def members_count(self):
-        """Retorna o número de membros da comunidade"""
+        """Retorna o número de membros da comunidade."""
         return self.members.count()
 
     class Meta:
@@ -23,6 +25,7 @@ class Community(models.Model):
 
 
 class Post(models.Model):
+    """Modelo que representa uma postagem dentro de uma comunidade."""
     title = models.CharField(max_length=200, verbose_name="Título")
     content = models.TextField(verbose_name="Conteúdo")
     community = models.ForeignKey(
@@ -43,6 +46,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    """Modelo que representa comentários feitos em postagens."""
     post = models.ForeignKey(
         'Post', on_delete=models.CASCADE, related_name='comments', verbose_name="Postagem"
     )
@@ -61,12 +65,23 @@ class Comment(models.Model):
         verbose_name_plural = "Comentários"
 
 
-# models.py
 class Vote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True, default=1)  # Defina um ID válido
-    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
-    value = models.IntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote')])
+    """Modelo que representa votos (upvote/downvote) em posts ou comentários."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuário")
+    post = models.ForeignKey(
+        'Post', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Postagem"
+    )
+    comment = models.ForeignKey(
+        'Comment', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Comentário"
+    )
+    value = models.IntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote')], verbose_name="Valor")
 
     class Meta:
         unique_together = ('user', 'post', 'comment')
+        verbose_name = "Voto"
+        verbose_name_plural = "Votos"
+
+    def __str__(self):
+        if self.post:
+            return f"{self.user.username} votou {self.value} no post '{self.post.title}'"
+        return f"{self.user.username} votou {self.value} no comentário '{self.comment.content[:50]}'"

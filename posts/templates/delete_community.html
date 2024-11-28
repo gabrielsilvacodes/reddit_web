@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excluir Comunidade</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <header>
+    <h1>Excluir Comunidade</h1>
+    <a href="{% url 'community_detail' community.id %}" class="btn">Voltar</a>
+  </header>
+
+  <main>
+    <section class="delete-confirmation">
+      <p>Você tem certeza que deseja excluir a comunidade <b>r/{{ community.name }}</b>?</p>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'community_detail' community.id %}" class="btn btn-secondary">Cancelar</a>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>
