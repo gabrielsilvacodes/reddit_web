@@ -131,12 +131,15 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.total_votes !== undefined) {
+                                // Atualizar a contagem de votos
                                 const voteDisplay = this.closest('.post-sidebar').querySelector('p b');
                                 voteDisplay.textContent = data.total_votes;
 
+                                // Selecionar botões
                                 const upvoteButton = this.closest('.post-sidebar').querySelector('.upvote');
                                 const downvoteButton = this.closest('.post-sidebar').querySelector('.downvote');
 
+                                // Gerenciar classes ativas
                                 upvoteButton.classList.remove('active');
                                 downvoteButton.classList.remove('active');
 
@@ -145,6 +148,8 @@
                                 } else if (data.current_vote === -1) {
                                     downvoteButton.classList.add('active');
                                 }
+                            } else {
+                                console.error('Erro ao atualizar votos:', data);
                             }
                         })
                         .catch(error => console.error('Erro:', error));
@@ -152,6 +157,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

@@ -97,28 +97,24 @@ class CommentCreateView(CreateView):
 def create_vote(request, post_id, value):
     if request.method == 'POST':
         post = get_object_or_404(Post, id=post_id)
+        vote, created = Vote.objects.update_or_create(
+            user=request.user,
+            post=post,
+            defaults={'value': value}
+        )
 
-        try:
-            vote = Vote.objects.get(user=request.user, post=post)
-            if vote.value == value:
-                # Remove o voto se o mesmo botão for clicado novamente
-                vote.delete()
-                current_vote = 0
-            else:
-                # Atualiza o voto para o novo valor (1 ou -1)
-                vote.value = value
-                vote.save()
-                current_vote = value
-        except Vote.DoesNotExist:
-            # Cria um novo voto
-            Vote.objects.create(user=request.user, post=post, value=value)
-            current_vote = value
+        if not created and vote.value == value:
+            # Remove o voto se o mesmo botão for clicado novamente
+            vote.delete()
+            value = 0  # Valor atual do voto é zerado
 
-        # Soma total de votos para o post
-        new_total_votes = Vote.objects.filter(post=post).aggregate(Sum('value'))['value__sum'] or 0
+        # Soma total de votos
+        total_votes = Vote.objects.filter(post=post).aggregate(Sum('value'))['value__sum'] or 0
 
-        # Retorna os dados necessários para o frontend
-        return JsonResponse({'total_votes': new_total_votes, 'current_vote': current_vote})
+        return JsonResponse({
+            'total_votes': total_votes,
+            'current_vote': value,  # Retorna o voto atual
+        })
 
     return JsonResponse({'error': 'Método não permitido'}, status=405)
 
