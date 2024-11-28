@@ -1,59 +1,33 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
+  <title>{% if community %}Editar Comunidade{% else %}Criar Comunidade{% endif %}</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-  <!-- Cabeçalho -->
   <header>
-    <div class="wraper-header">
-      <div class="logo">
-        <a href="{% url 'home' %}">
-          <img src="{% static 'imgs/reddit_logo.jpeg' %}" alt="Logo do Reddit">
-        </a>
-      </div>
-      <nav>
-        <a href="{% url 'home' %}">Início</a>
-        <a href="{% url 'view_all' %}">Comunidades</a>
-      </nav>
-    </div>
+    <h1>{% if community %}Editar Comunidade{% else %}Criar Comunidade{% endif %}</h1>
   </header>
 
-  <!-- Conteúdo Principal -->
   <main>
-    <div class="container">
-      <h1>{{ title }}</h1>
-
-      <!-- Exibição de Erros -->
-      {% if form.errors %}
-      <ul class="error-list">
-        {% for field, errors in form.errors.items %}
-        <li>{{ field|capfirst }}: {{ errors|join:", " }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-
-      <!-- Formulário -->
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-          {{ form.as_p }}
-        </div>
-        <button type="submit" class="btn">{{ button_text }}</button>
-      </form>
-    </div>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Nome da Comunidade:</label>
+        <input type="text" id="name" name="name" value="{{ initial_data.name }}" placeholder="Nome da Comunidade" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" placeholder="Descrição da Comunidade" required>{{ initial_data.description }}</textarea>
+      </div>
+      <button type="submit" class="btn">{% if community %}Salvar Alterações{% else %}Criar Comunidade{% endif %}</button>
+    </form>
   </main>
-
-  <!-- Rodapé -->
-  <footer>
-    <p>© 2024 Reddit Clone</p>
-  </footer>
 </body>
 
 </html>

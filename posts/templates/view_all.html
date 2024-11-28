@@ -75,27 +75,17 @@
                 </div>
             </div>
             {% empty %}
-            <p>Não há comunidades disponíveis no momento. Crie uma para começar!</p>
+            <p>Não há comunidades disponíveis no momento.</p>
             {% endfor %}
         </div>
     </section>
 
-    <!-- Formulário para criar nova comunidade -->
+    <!-- Botão para criar nova comunidade -->
     {% if user.is_authenticated %}
     <section class="create-community">
-        <h2>Criar Nova Comunidade</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name">Nome da Comunidade:</label>
-                <input type="text" id="name" name="name" placeholder="Digite o nome da comunidade" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Descrição:</label>
-                <textarea id="description" name="description" placeholder="Digite uma breve descrição" required></textarea>
-            </div>
-            <button type="submit" class="btn">Criar Comunidade</button>
-        </form>
+        <div class="create-button">
+            <a href="{% url 'community_create' %}" class="btn">+ Criar Nova Comunidade</a>
+        </div>
     </section>
     {% else %}
     <p>Faça <a href="{% url 'login' %}">login</a> para criar uma comunidade.</p>

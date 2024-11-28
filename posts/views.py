@@ -35,19 +35,8 @@ def home(request):
 @login_required
 def view_all(request):
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')
-
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        if name and description:
-            Community.objects.create(
-                name=name,
-                description=description,
-                creator=request.user
-            )
-            return redirect('view_all')
-
     return render(request, 'view_all.html', {'communities': communities})
+
 
 # Página específica de uma comunidade
 @login_required

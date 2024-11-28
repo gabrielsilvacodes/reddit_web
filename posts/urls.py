@@ -15,7 +15,6 @@ urlpatterns = [
     # Criar nova comunidade
     path('communities/new/', views.community_form, name='community_create'),
 
-    # Editar comunidade existente
     path('communities/<int:community_id>/edit/', views.community_form, name='edit_community'),
 
     # Deletar comunidade
