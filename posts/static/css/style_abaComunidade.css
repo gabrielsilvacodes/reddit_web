@@ -45,13 +45,13 @@ header {
     cursor: pointer;
 }
 
-.home-bnt p {
+.home-bnt a p {
     font-size: 1rem;
     color: #000000;
     margin-right: 10px;
 }
 
-.home-bnt p:hover {
+.home-bnt a p:hover {
     text-decoration: underline;
 }
 

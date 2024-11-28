@@ -8,18 +8,18 @@ from django.views.generic import ListView
 from .models import Profile
 
 # View para registro de usuário
-def register_view(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Após salvar o usuário, autentique e faça login automaticamente
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            login(request, user)
-            return redirect('profile_list')  # Redireciona para a lista de perfis após o registro
-    else:
-        form = UserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+# def register_view(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             # Após salvar o usuário, autentique e faça login automaticamente
+#             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+#             login(request, user)
+#             return redirect('profile_list')  # Redireciona para a lista de perfis após o registro
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'accounts/register.html', {'form': form})
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):

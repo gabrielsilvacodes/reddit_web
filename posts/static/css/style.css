@@ -43,12 +43,21 @@ header {
     display: flex;
     align-items: center;
     cursor: pointer;
+    
 }
 
 .home-bnt p {
     font-size: 1rem;
-    color: #000000;
+   
     margin-right: 10px;
+    
+}
+.home-bnt a {
+    font-size: 1rem;
+   color: black;
+   text-decoration: none;
+    margin-right: 10px;
+    
 }
 
 .home-bnt p:hover {
@@ -125,13 +134,13 @@ color: rgb(70,209,96);
 .comunidade-single p button{
     
     cursor: pointer;
-    
+    margin-left: 10px;
     background-color: #069;
     color: white;
     border-radius: 10px;
     border: 0;
-    width: 60px;
-    height:100%;
+    width: 100px;
+    height: 35px;
 }
 
 .comunidade-single button:hover{background-color: rgb(7, 129, 189);}
@@ -152,9 +161,12 @@ color: rgb(70,209,96);
 
 
 }
+.comunidades a{
+   text-decoration: none;  
+}
 
 .comunidades button.view-all{
-
+   
     display: block;
     margin:10px auto ;
     width: 80%;

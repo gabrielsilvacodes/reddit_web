@@ -8,14 +8,21 @@ from .models import Post, Community, Comment, Vote
 
 # Página inicial
 def home(request):
-    posts_with_votes = Post.objects.select_related('community', 'author').annotate(
-        total_votes=Sum('vote__value'),
-        user_vote=Case(
-            When(vote__user=request.user, then='vote__value'),
-            default=0,
-            output_field=IntegerField(),
-        )
-    ).order_by('-pub_date')
+    if request.user.is_authenticated:
+        # Caso o usuário esteja autenticado
+        posts_with_votes = Post.objects.select_related('community', 'author').annotate(
+            total_votes=Sum('vote__value'),
+            user_vote=Case(
+                When(vote__user=request.user, then=Sum('vote__value')),
+                default=0,
+                output_field=IntegerField(),
+            )
+        ).order_by('-pub_date')
+    else:
+        # Caso o usuário seja anônimo
+        posts_with_votes = Post.objects.select_related('community', 'author').annotate(
+            total_votes=Sum('vote__value')
+        ).order_by('-pub_date')
 
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')[:5]
     communities_with_rank = [(index + 1, community) for index, community in enumerate(communities)]
@@ -24,6 +31,7 @@ def home(request):
         'posts': posts_with_votes,
         'communities_with_rank': communities_with_rank,
     })
+
 
 # Página para visualizar todas as comunidades
 def view_all(request):
