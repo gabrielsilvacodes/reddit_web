@@ -24,10 +24,11 @@ def home(request):
         )
 
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')[:5]
+    communities_with_rank = [(index + 1, community) for index, community in enumerate(communities)]
 
     return render(request, 'home.html', {
         'posts': posts_with_votes,
-        'communities_with_rank': communities,
+        'communities_with_rank': communities_with_rank,
     })
 
 # Página para visualizar todas as comunidades e criar uma nova
