@@ -11,6 +11,17 @@
   <header>
     <h1>{{ post.title }}</h1>
     <p>Por: {{ post.author.username }} em {{ post.pub_date|date:"d M Y" }}</p>
+
+    <!-- Mostrar opções de editar e excluir apenas para o criador ou administradores -->
+    {% if request.user == post.author or request.user.is_superuser %}
+    <div class="post-actions">
+      <a href="{% url 'post_update' post.id %}" class="btn">Editar Post</a>
+      <form method="post" action="{% url 'post_delete' post.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn delete-post">Excluir Post</button>
+      </form>
+    </div>
+    {% endif %}
   </header>
 
   <main>
@@ -29,9 +40,7 @@
         {% for comment in comments %}
         <li>
           <div class="comment-header">
-            <p>
-              <b>{{ comment.author.username }}</b> comentou em {{ comment.pub_date|date:"d M Y H:i" }}:
-            </p>
+            <p><b>{{ comment.author.username }}</b> comentou em {{ comment.pub_date|date:"d M Y H:i" }}:</p>
             {% if request.user == comment.author or request.user.is_superuser %}
             <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
               {% csrf_token %}

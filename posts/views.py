@@ -37,7 +37,6 @@ def view_all(request):
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')
     return render(request, 'view_all.html', {'communities': communities})
 
-
 # Página específica de uma comunidade
 @login_required
 def aba_comunidade(request, community_id):
@@ -54,31 +53,25 @@ def aba_comunidade(request, community_id):
 # Criar ou editar comunidade (genérico)
 @login_required
 def community_form(request, community_id=None):
-    # Obtemos a comunidade se o ID for fornecido e o usuário for o criador
     community = get_object_or_404(Community, id=community_id, creator=request.user) if community_id else None
 
     if request.method == 'POST':
-        # Coleta os dados do formulário
         name = request.POST.get('name')
         description = request.POST.get('description')
 
-        # Validação básica
         if name and description:
             if community:
-                # Atualiza a comunidade existente
                 community.name = name
                 community.description = description
                 community.save()
             else:
-                # Cria uma nova comunidade
                 Community.objects.create(
                     name=name,
                     description=description,
                     creator=request.user
                 )
-            return redirect('view_all')  # Redireciona após salvar
+            return redirect('view_all')
 
-    # Dados iniciais para edição ou criação
     initial_data = {
         'name': community.name if community else '',
         'description': community.description if community else ''
@@ -86,7 +79,7 @@ def community_form(request, community_id=None):
 
     return render(request, 'community_form.html', {
         'community': community,
-        'initial_data': initial_data,  # Passa os valores iniciais para o template
+        'initial_data': initial_data,
     })
 
 # Deletar comunidade
@@ -99,6 +92,7 @@ def delete_community(request, community_id):
     return render(request, 'delete_community.html', {'community': community})
 
 # CRUD para Post
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content', 'image', 'community']
@@ -106,12 +100,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.author = self.request.user  # Atribuindo o autor do post
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['communities'] = Community.objects.all()  # Adiciona todas as comunidades ao contexto
+        context['communities'] = Community.objects.all()  # Passa todas as comunidades para o contexto
         return context
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -123,13 +117,26 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.object
+        communities = Community.objects.all()
+        
+        # Adiciona um campo de seleção às comunidades
+        for community in communities:
+            community.is_selected = post.community.id == community.id if post.community else False
+        
+        context['communities'] = communities
+        return context
+
+
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_confirm_delete.html'
     success_url = reverse_lazy('home')
 
     def get_queryset(self):
-        return Post.objects.filter(author=self.request.user)
+        return Post.objects.filter(author=self.request.user)  # Apenas posts do usuário
 
 # Votação em Posts
 @login_required
