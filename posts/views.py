@@ -167,3 +167,11 @@ def community_detail(request, community_id):
     community = get_object_or_404(Community, id=community_id)
     posts = community.posts.all().order_by('-pub_date')
     return render(request, 'community_detail.html', {'community': community, 'posts': posts})
+
+
+
+from django.shortcuts import render
+
+def post_form(request):
+    return render(request, 'post_form.html')
+
