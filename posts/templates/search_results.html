@@ -1,38 +1,34 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resultados da Busca</title>
 </head>
 
 <body>
-  <h1>Resultados da Busca</h1>
-  <p>Termo buscado: "{{ query }}"</p>
+  <h1>Resultados da Busca para "{{ query }}"</h1>
 
-  <h2>Posts</h2>
   {% if posts %}
-  <ul>
-    {% for post in posts %}
-    <li>
-      <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+  <h2>Posts Encontrados</h2>
+  {% for post in posts %}
+  <div>
+    <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+    <p>{{ post.content|truncatewords:20 }}</p>
+  </div>
+  {% endfor %}
   {% else %}
   <p>Nenhum post encontrado.</p>
   {% endif %}
 
-  <h2>Comunidades</h2>
   {% if communities %}
-  <ul>
-    {% for community in communities %}
-    <li>
-      <a href="{% url 'aba_comunidade' community.id %}">{{ community.name }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+  <h2>Comunidades Encontradas</h2>
+  {% for community in communities %}
+  <div>
+    <a href="{% url 'community_detail' community.id %}">{{ community.name }}</a>
+    <p>{{ community.description }}</p>
+  </div>
+  {% endfor %}
   {% else %}
   <p>Nenhuma comunidade encontrada.</p>
   {% endif %}

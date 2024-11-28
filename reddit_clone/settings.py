@@ -53,9 +53,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'reddit_clone.urls'
 
-STATIC_URL = '/static/'  # URL base para arquivos estáticos
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Adicione a pasta static ao projeto
-
 
 TEMPLATES = [
     {
@@ -122,7 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'  # URL base para arquivos estáticos
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Adicione a pasta static ao projeto
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'posts/static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

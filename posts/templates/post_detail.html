@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>{{ post.title }}</title>
+</head>
+
+<body>
+  <h1>{{ post.title }}</h1>
+  <p>Por: {{ post.author.username }} em {{ post.pub_date|date:"d M Y" }}</p>
+  <p>{{ post.content }}</p>
+  {% if post.image %}
+  <img src="{{ post.image.url }}" alt="Imagem do post">
+  {% endif %}
+  <a href="{% url 'home' %}">Voltar para a Home</a>
+</body>
+
+</html>

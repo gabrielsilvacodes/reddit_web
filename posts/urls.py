@@ -36,10 +36,16 @@ urlpatterns = [
     # Busca
     path('search/', views.search, name='search'),  # Página de busca
 
+    path('post/<int:pk>/', views.post_detail, name='post_detail'),  # Página de detalhes do post
+
+
     # Entrar e sair da comunidade
     path('community/<int:community_id>/join/', views.join_community, name='join_community'),  # Entrar na comunidade
     path('community/<int:community_id>/leave/', views.leave_community, name='leave_community'),  # Sair da comunidade
 
     # Detalhes da comunidade
     path('community/<int:community_id>/', views.community_detail, name='community_detail'),  # Página de detalhes da comunidade
+
+    path('post/<int:post_id>/vote/<int:value>/', views.create_vote, name='create_vote'),
+
 ]

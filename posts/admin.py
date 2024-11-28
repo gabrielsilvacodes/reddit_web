@@ -11,7 +11,10 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('content', 'post', 'author', 'pub_date')  # Resumo básico dos comentários
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'post', 'comment', 'value')  # Quem votou em quê
+    list_display = ('user', 'post', 'comment', 'value')
+
+    def comment(self, obj):
+        return obj.comment.content if obj.comment else 'N/A'
 
 # Registra os modelos com suas configurações simplificadas
 admin.site.register(Community, CommunityAdmin)

@@ -15,7 +15,7 @@
         <div class="wraper-header">
             <div class="logo">
                 <a href="{% url 'home' %}">
-                    <img src="{% static 'imgs/reddit_logo.jpeg' %}" alt="Logo do Reddit" %}'">
+                    <img src="{% static 'imgs/reddit_logo.jpeg' %}" alt="Logo do Reddit">
                 </a>
             </div>
 
@@ -46,7 +46,6 @@
                 <i class="fa-solid fa-video"></i>
                 <i class="fa-solid fa-bullhorn"></i>
             </div>
-
         </div>
     </header>
 
@@ -55,11 +54,11 @@
             <!-- Posts -->
             <div class="posts">
                 {% for post in posts %}
-                <div class="post-single">
+                <div class="post-single" data-post-id="{{ post.id }}">
                     <div class="post-sidebar">
-                        <i class="fa-solid fa-arrow-up"></i>
-                        <p><b>{{ post.total_votes|default:0 }}</b></p> <!-- Soma dos votos -->
-                        <i class="fa-solid fa-arrow-down"></i>
+                        <button class="vote-button upvote" data-value="1" title="Upvote">▲</button>
+                        <p><b>{{ post.total_votes|default:0 }}</b></p>
+                        <button class="vote-button downvote" data-value="-1" title="Downvote">▼</button>
                     </div>
                     <div class="post-content">
                         <div class="post-content-text">
@@ -70,7 +69,7 @@
                                 {% endif %}
                             </p>
                             <h3>{{ post.title }}</h3>
-                            <p>{{ post.content }}</p> <!-- Conteúdo do post -->
+                            <p>{{ post.content }}</p>
                         </div>
                         {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Imagem do Post">
@@ -111,6 +110,48 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const voteButtons = document.querySelectorAll('.vote-button');
+
+            voteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const postId = this.closest('.post-single').dataset.postId;
+                    const value = parseInt(this.dataset.value, 10);
+
+                    fetch(`/post/${postId}/vote/${value}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.total_votes !== undefined) {
+                                const voteDisplay = this.closest('.post-sidebar').querySelector('p b');
+                                voteDisplay.textContent = data.total_votes;
+
+                                const upvoteButton = this.closest('.post-sidebar').querySelector('.upvote');
+                                const downvoteButton = this.closest('.post-sidebar').querySelector('.downvote');
+
+                                upvoteButton.classList.remove('active');
+                                downvoteButton.classList.remove('active');
+
+                                if (data.current_vote === 1) {
+                                    upvoteButton.classList.add('active');
+                                } else if (data.current_vote === -1) {
+                                    downvoteButton.classList.add('active');
+                                }
+                            }
+                        })
+                        .catch(error => console.error('Erro:', error));
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

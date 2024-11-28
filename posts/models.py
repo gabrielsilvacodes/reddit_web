@@ -61,19 +61,12 @@ class Comment(models.Model):
         verbose_name_plural = "Comentários"
 
 
+# models.py
 class Vote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuário")
-    post = models.ForeignKey(
-        'Post', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Postagem"
-    )
-    comment = models.ForeignKey(
-        'Comment', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Comentário"
-    )
-    value = models.IntegerField(
-        choices=[(1, 'Voto Positivo'), (-1, 'Voto Negativo')], verbose_name="Valor"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True, default=1)  # Defina um ID válido
+    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
+    value = models.IntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote')])
 
     class Meta:
-        unique_together = ('user', 'post', 'comment')  # Um voto por usuário por post/comentário
-        verbose_name = "Voto"
-        verbose_name_plural = "Votos"
+        unique_together = ('user', 'post', 'comment')

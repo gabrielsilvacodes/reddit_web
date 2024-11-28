@@ -1,19 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.db.models import Sum, Count, Q
+from django.db.models import Sum, Count, Q, Case, When, IntegerField
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from .models import Post, Community, Comment, Vote
-
 
 # Página inicial
 def home(request):
-    # Posts com soma dos votos
     posts_with_votes = Post.objects.select_related('community', 'author').annotate(
-        total_votes=Sum('vote__value')
+        total_votes=Sum('vote__value'),
+        user_vote=Case(
+            When(vote__user=request.user, then='vote__value'),
+            default=0,
+            output_field=IntegerField(),
+        )
     ).order_by('-pub_date')
 
-    # Comunidades ordenadas pelo número de membros
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')[:5]
     communities_with_rank = [(index + 1, community) for index, community in enumerate(communities)]
 
@@ -22,12 +25,10 @@ def home(request):
         'communities_with_rank': communities_with_rank,
     })
 
-
 # Página para visualizar todas as comunidades
 def view_all(request):
     communities = Community.objects.all().order_by('name')
     return render(request, 'view_all.html', {'communities': communities})
-
 
 # Página específica de uma comunidade
 def aba_comunidade(request, community_id):
@@ -37,19 +38,16 @@ def aba_comunidade(request, community_id):
     ).order_by('-pub_date')
     return render(request, 'aba_comunidade.html', {'community': community, 'posts': posts})
 
-
 # CRUD para Post
 class PostCreateView(CreateView):
     model = Post
     fields = ['title', 'content', 'image', 'community']
-    template_name = 'post_form.html'  # Caminho correto do template
+    template_name = 'post_form.html'
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.instance.author = self.request.user  # Define o autor como o usuário logado
+        form.instance.author = self.request.user
         return super().form_valid(form)
-
-
 
 class PostUpdateView(UpdateView):
     model = Post
@@ -57,12 +55,10 @@ class PostUpdateView(UpdateView):
     template_name = 'posts/post_form.html'
     success_url = reverse_lazy('home')
 
-
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'posts/post_confirm_delete.html'
     success_url = reverse_lazy('home')
-
 
 # CRUD para Community
 class CommunityCreateView(CreateView):
@@ -75,19 +71,16 @@ class CommunityCreateView(CreateView):
         form.instance.creator = self.request.user
         return super().form_valid(form)
 
-
 class CommunityUpdateView(UpdateView):
     model = Community
     fields = ['name', 'description']
     template_name = 'posts/community_form.html'
     success_url = reverse_lazy('view_all')
 
-
 class CommunityDeleteView(DeleteView):
     model = Community
     template_name = 'posts/community_confirm_delete.html'
     success_url = reverse_lazy('view_all')
-
 
 # CRUD para Comment
 class CommentCreateView(CreateView):
@@ -100,17 +93,34 @@ class CommentCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
 # Votação em Posts
 def create_vote(request, post_id, value):
-    post = get_object_or_404(Post, id=post_id)
-    Vote.objects.update_or_create(
-        user=request.user,
-        post=post,
-        defaults={'value': value}
-    )
-    return redirect('home')
+    if request.method == 'POST':
+        post = get_object_or_404(Post, id=post_id)
 
+        try:
+            vote = Vote.objects.get(user=request.user, post=post)
+            if vote.value == value:
+                # Remove o voto se o mesmo botão for clicado novamente
+                vote.delete()
+                current_vote = 0
+            else:
+                # Atualiza o voto para o novo valor (1 ou -1)
+                vote.value = value
+                vote.save()
+                current_vote = value
+        except Vote.DoesNotExist:
+            # Cria um novo voto
+            Vote.objects.create(user=request.user, post=post, value=value)
+            current_vote = value
+
+        # Soma total de votos para o post
+        new_total_votes = Vote.objects.filter(post=post).aggregate(Sum('value'))['value__sum'] or 0
+
+        # Retorna os dados necessários para o frontend
+        return JsonResponse({'total_votes': new_total_votes, 'current_vote': current_vote})
+
+    return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 # Busca
 def search(request):
@@ -128,6 +138,10 @@ def search(request):
         'communities': communities
     })
 
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'post_detail.html', {'post': post})
+
 @login_required
 def leave_community(request, community_id):
     community = get_object_or_404(Community, id=community_id)
@@ -135,7 +149,6 @@ def leave_community(request, community_id):
         community.members.remove(request.user)
     return redirect('view_all')
 
-# Entrar e sair de uma comunidade
 @login_required
 def join_community(request, community_id):
     community = get_object_or_404(Community, id=community_id)
@@ -144,7 +157,6 @@ def join_community(request, community_id):
     else:
         community.members.add(request.user)
     return redirect('view_all')
-
 
 # Detalhes de uma comunidade
 def community_detail(request, community_id):
