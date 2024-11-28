@@ -4,16 +4,80 @@
 
 <head>
   <title>{{ post.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-  <h1>{{ post.title }}</h1>
-  <p>Por: {{ post.author.username }} em {{ post.pub_date|date:"d M Y" }}</p>
-  <p>{{ post.content }}</p>
-  {% if post.image %}
-  <img src="{{ post.image.url }}" alt="Imagem do post">
-  {% endif %}
-  <a href="{% url 'home' %}">Voltar para a Home</a>
+  <header>
+    <h1>{{ post.title }}</h1>
+    <p>Por: {{ post.author.username }} em {{ post.pub_date|date:"d M Y" }}</p>
+  </header>
+
+  <main>
+    <section class="post-details">
+      <p>{{ post.content }}</p>
+      {% if post.image %}
+      <img src="{{ post.image.url }}" alt="Imagem do post">
+      {% endif %}
+      <p>{{ post.total_comments }} comentário{{ post.total_comments|pluralize }}</p>
+    </section>
+
+    <section class="comments-section" id="comment-section">
+      <h2>Comentários</h2>
+      {% if comments %}
+      <ul class="comments-list">
+        {% for comment in comments %}
+        <li>
+          <div class="comment-header">
+            <p>
+              <b>{{ comment.author.username }}</b> comentou em {{ comment.pub_date|date:"d M Y H:i" }}:
+            </p>
+            {% if request.user == comment.author or request.user.is_superuser %}
+            <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="delete-comment">Excluir</button>
+            </form>
+            {% endif %}
+          </div>
+          <p>{{ comment.content }}</p>
+          {% if comment.parent %}
+          <p class="reply">Respondendo a: {{ comment.parent.author.username }}</p>
+          {% endif %}
+
+          <!-- Formulário para responder a um comentário -->
+          {% if user.is_authenticated %}
+          <form method="post" action="{% url 'post_detail' post.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="parent" value="{{ comment.id }}">
+            <textarea name="content" placeholder="Responda a este comentário..." required></textarea>
+            <button type="submit">Responder</button>
+          </form>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Não há comentários neste post ainda. Seja o primeiro a comentar!</p>
+      {% endif %}
+    </section>
+
+    {% if user.is_authenticated %}
+    <section class="add-comment">
+      <h2>Adicionar um Comentário</h2>
+      <form method="post" action="{% url 'post_detail' post.pk %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="Escreva seu comentário aqui..." required></textarea>
+        <button type="submit">Comentar</button>
+      </form>
+    </section>
+    {% else %}
+    <p>Faça <a href="{% url 'login' %}">login</a> para adicionar um comentário.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <a href="{% url 'home' %}">Voltar para a Home</a>
+  </footer>
 </body>
 
 </html>
