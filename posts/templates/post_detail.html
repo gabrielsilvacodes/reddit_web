@@ -19,19 +19,31 @@
       {% if post.image %}
       <img src="{{ post.image.url }}" alt="Imagem do post">
       {% endif %}
+      <p>{{ post.total_comments }} comentário{{ post.total_comments|pluralize }}</p>
     </section>
 
-    <section class="comments-section">
+    <section class="comments-section" id="comment-section">
       <h2>Comentários</h2>
       {% if comments %}
       <ul class="comments-list">
         {% for comment in comments %}
         <li>
-          <p><b>{{ comment.author.username }}</b> comentou em {{ comment.created_at|date:"d M Y H:i" }}:</p>
+          <div class="comment-header">
+            <p>
+              <b>{{ comment.author.username }}</b> comentou em {{ comment.pub_date|date:"d M Y H:i" }}:
+            </p>
+            {% if request.user == comment.author or request.user.is_superuser %}
+            <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="delete-comment">Excluir</button>
+            </form>
+            {% endif %}
+          </div>
           <p>{{ comment.content }}</p>
           {% if comment.parent %}
           <p class="reply">Respondendo a: {{ comment.parent.author.username }}</p>
           {% endif %}
+
           <!-- Formulário para responder a um comentário -->
           {% if user.is_authenticated %}
           <form method="post" action="{% url 'post_detail' post.pk %}">

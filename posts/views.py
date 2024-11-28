@@ -12,6 +12,7 @@ def home(request):
     if request.user.is_authenticated:
         posts_with_votes = Post.objects.select_related('community', 'author').annotate(
             total_votes=Sum('vote__value'),
+            total_comments=Count('comments'),  # Contabilizador de comentários
             user_vote=Case(
                 When(vote__user=request.user, then='vote__value'),
                 default=0,
@@ -20,7 +21,8 @@ def home(request):
         ).order_by('-pub_date')
     else:
         posts_with_votes = Post.objects.select_related('community', 'author').annotate(
-            total_votes=Sum('vote__value')
+            total_votes=Sum('vote__value'),
+            total_comments=Count('comments')  # Contabilizador de comentários
         ).order_by('-pub_date')
 
     communities = Community.objects.annotate(member_count=Count('members')).order_by('-member_count')[:5]
@@ -30,6 +32,7 @@ def home(request):
         'posts': posts_with_votes,
         'communities_with_rank': communities_with_rank,
     })
+
 
 # Página para visualizar todas as comunidades
 def view_all(request):
@@ -149,6 +152,16 @@ def post_detail(request, pk):
                 return redirect('post_detail', pk=post.pk)
 
     return render(request, 'post_detail.html', {'post': post, 'comments': comments})
+
+# Apagar comentário
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user == comment.author or request.user.is_superuser:
+        comment.delete()
+        return redirect('post_detail', pk=comment.post.id)
+    return JsonResponse({'error': 'Você não tem permissão para deletar este comentário'}, status=403)
+
 
 @login_required
 def leave_community(request, community_id):

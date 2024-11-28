@@ -44,4 +44,7 @@ urlpatterns = [
 
     # Votos em post
     path('post/<int:post_id>/vote/<int:value>/', views.create_vote, name='create_vote'),
+
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+
 ]
