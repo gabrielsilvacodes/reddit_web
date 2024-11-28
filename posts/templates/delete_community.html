@@ -12,16 +12,17 @@
 <body>
   <header>
     <h1>Excluir Comunidade</h1>
-    <a href="{% url 'community_detail' community.id %}" class="btn">Voltar</a>
+    <a href="{% url 'aba_comunidade' community.id %}" class="btn">Cancelar</a>
   </header>
 
   <main>
-    <section class="delete-confirmation">
-      <p>Você tem certeza que deseja excluir a comunidade <b>r/{{ community.name }}</b>?</p>
-      <form method="post">
+    <section class="confirmation-section">
+      <p>Tem certeza de que deseja excluir a comunidade <b>{{ community.name }}</b>?</p>
+      <p>Essa ação não pode ser desfeita.</p>
+
+      <form method="post" action="{% url 'delete_community' community.id %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Excluir</button>
-        <a href="{% url 'community_detail' community.id %}" class="btn btn-secondary">Cancelar</a>
       </form>
     </section>
   </main>
