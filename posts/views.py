@@ -54,26 +54,39 @@ def aba_comunidade(request, community_id):
 # Criar ou editar comunidade (genérico)
 @login_required
 def community_form(request, community_id=None):
+    # Obtemos a comunidade se o ID for fornecido e o usuário for o criador
     community = get_object_or_404(Community, id=community_id, creator=request.user) if community_id else None
 
     if request.method == 'POST':
+        # Coleta os dados do formulário
         name = request.POST.get('name')
         description = request.POST.get('description')
+
+        # Validação básica
         if name and description:
             if community:
+                # Atualiza a comunidade existente
                 community.name = name
                 community.description = description
                 community.save()
             else:
+                # Cria uma nova comunidade
                 Community.objects.create(
                     name=name,
                     description=description,
                     creator=request.user
                 )
-            return redirect('view_all')
+            return redirect('view_all')  # Redireciona após salvar
+
+    # Dados iniciais para edição ou criação
+    initial_data = {
+        'name': community.name if community else '',
+        'description': community.description if community else ''
+    }
 
     return render(request, 'community_form.html', {
         'community': community,
+        'initial_data': initial_data,  # Passa os valores iniciais para o template
     })
 
 # Deletar comunidade
@@ -95,6 +108,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['communities'] = Community.objects.all()  # Adiciona todas as comunidades ao contexto
+        return context
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
