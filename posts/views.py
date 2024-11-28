@@ -199,23 +199,3 @@ def join_community(request, community_id):
     if request.user not in community.members.all():
         community.members.add(request.user)
     return redirect('view_all')
-<<<<<<< Updated upstream
-
-# Detalhes de uma comunidade
-def community_detail(request, community_id):
-    community = get_object_or_404(Community, id=community_id)
-    posts = community.posts.all().order_by('-pub_date')
-    return render(request, 'community_detail.html', {'community': community, 'posts': posts})
-<<<<<<< HEAD
-
-
-
-from django.shortcuts import render
-
-def post_form(request):
-    return render(request, 'post_form.html')
-
-=======
->>>>>>> 171f33a92f239d8dc8fa82306b7de38a2d790ff9
-=======
->>>>>>> Stashed changes
