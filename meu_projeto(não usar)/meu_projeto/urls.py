@@ -1,5 +1,5 @@
 """
-URL configuration for reddit_clone project.
+URL configuration for meu_projeto project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,27 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-
-from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('posts.urls')),
-    path('', include('reddit_clone.urls')),  # Inclui as URLs do app 'meu_app'
-    
-   
-        
-] + static(settings.MEDIA_URL , document_root =settings.MEDIA_ROOT)
-
-# meu_app/urls.py
-
-
-
-urlpatterns = [
-    path('', views.index, name='home'),  # Associa a URL raiz à função 'home'
-    path('view_all/', views.view_all, name='view_all'),
-    path('aba_comunidade/', views.aba_comunidade, name='aba_comunidade'),
-   
+    path('accounts/', include('accounts.urls')),
 ]

@@ -7,6 +7,10 @@ from .views import (
 )
 from .views import CommentCreateView, CommentDeleteView
 from .views import VoteCreateView, VoteDeleteView
+from django.contrib import admin
+from django.urls import path, include  # Importa include para incluir as URLs do app
+
+
 
 urlpatterns = [
     path('posts/', PostListView.as_view(), name='post_list'),
@@ -23,6 +27,12 @@ urlpatterns = [
     path('comments/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
     path('votes/create/', VoteCreateView.as_view(), name='vote_create'),
     path('votes/<int:pk>/delete/', VoteDeleteView.as_view(), name='vote_delete'),
+    path('admin/', admin.site.urls),
+    
+    
+
+   
+
 ]
 
 

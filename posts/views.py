@@ -94,3 +94,12 @@ class VoteDeleteView(DeleteView):
     template_name = 'posts/vote_confirm_delete.html'
     success_url = reverse_lazy('post_list')
 
+def index(request):
+    return render(request, 'home.html') #renderiza o aquivo html
+
+def view_all(request):
+    return render(request, 'view_all.html')
+
+def aba_comunidade(request):
+    return render(request, 'aba_comunidade.html')
+
